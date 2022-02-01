@@ -1,6 +1,7 @@
 package com.example.happli_welcomeexercice.ViewModel;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +52,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull RecyclerAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         String name = employeesList.get(position).getName();
+        Log.d("OnBind", "dans l'OBVH");
         holder.nameTxt.setText(name);
     }
 
