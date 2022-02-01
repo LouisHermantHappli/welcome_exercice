@@ -41,21 +41,9 @@ public class ActivityList extends AppCompatActivity {
 
         setEmployeeName();
 
-        Log.d("Adapter", "dans l'adapter");
-//        setAdapter();
-
         Log.d("END", "Fini");
     }
 
-//    private void setAdapter() {
-//
-//        setOnClickListner();
-//        RecyclerAdapter adapter = new RecyclerAdapter(employeesList, listener);
-//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-//        recyclerView.setLayoutManager(layoutManager);
-//        recyclerView.setItemAnimator(new DefaultItemAnimator());
-//        recyclerView.setAdapter(adapter);
-//    }
 
     private void setOnClickListner(List<Employee> employee) {
         listener = new RecyclerAdapter.RecyclerViewClickListener() {
@@ -79,11 +67,6 @@ public class ActivityList extends AppCompatActivity {
 
                 showData(response.body());
 
-//                for(int i = 0; i < response.body().size(); i++){
-//                    Log.d("ADD", response.body().get(i).getName());
-//                    employeesList.add(new Employee(response.body().get(i).getName()));
-//
-//                }
             }
 
             @Override
