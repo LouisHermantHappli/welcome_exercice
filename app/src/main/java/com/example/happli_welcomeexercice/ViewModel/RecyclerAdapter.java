@@ -15,13 +15,14 @@ import com.example.happli_welcomeexercice.Model.Employee;
 import com.example.happli_welcomeexercice.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder> {
 
-    private ArrayList<Employee> employeesList;
+    private List<Employee> employeesList;
     private RecyclerViewClickListener listener;
 
-    public RecyclerAdapter(ArrayList<Employee> employeesList, RecyclerViewClickListener listener){
+    public RecyclerAdapter(List<Employee> employeesList, RecyclerViewClickListener listener){
         this.employeesList = employeesList;
         this.listener = listener;
 

@@ -36,32 +36,26 @@ public class ActivityList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+        employeesList = new ArrayList<>();
         recyclerView = (RecyclerView)findViewById(R.id.rvEmployee);
-        employeesList = new ArrayList<Employee>();
 
-        Log.d("Tab", "Garni tableau");
-        employeesList = setEmployeeName();
-        if(employeesList.size() == 9)
-            Log.i("Employe", "List created");
-
-        for(int i =0; i<employeesList.size();i++)
-            Log.d("TAB OUT", employeesList.get(i).getName());
+        setEmployeeName();
 
         Log.d("Adapter", "dans l'adapter");
-        setAdapter();
+//        setAdapter();
 
         Log.d("END", "Fini");
     }
 
-    private void setAdapter() {
-
-        setOnClickListner();
-        RecyclerAdapter adapter = new RecyclerAdapter(employeesList, listener);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(adapter);
-    }
+//    private void setAdapter() {
+//
+//        setOnClickListner();
+//        RecyclerAdapter adapter = new RecyclerAdapter(employeesList, listener);
+//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+//        recyclerView.setLayoutManager(layoutManager);
+//        recyclerView.setItemAnimator(new DefaultItemAnimator());
+//        recyclerView.setAdapter(adapter);
+//    }
 
     private void setOnClickListner() {
         listener = new RecyclerAdapter.RecyclerViewClickListener() {
@@ -75,9 +69,7 @@ public class ActivityList extends AppCompatActivity {
         };
     }
 
-    private ArrayList<Employee> setEmployeeName() {
-
-        ArrayList<Employee> list = new ArrayList<Employee>();
+    private void setEmployeeName() {
 
         EmployeeInterface api = EmployeeAccess.employeeAccess();
         Log.d("test", "ok");
@@ -85,19 +77,30 @@ public class ActivityList extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Employee>> call, Response<List<Employee>> response) {
 
-                for(int i = 0; i < response.body().size(); i++){
-                    Log.d("ADD", response.body().get(i).getName());
-                    list.add(new Employee(response.body().get(i).getName()));
-                    Log.d("TAB", list.get(i).getName());
-                }
+                showData(response.body());
+//                for(int i = 0; i < response.body().size(); i++){
+//                    Log.d("ADD", response.body().get(i).getName());
+//                    employeesList.add(new Employee(response.body().get(i).getName()));
+//
+//                }
             }
 
             @Override
             public void onFailure(Call<List<Employee>> call, Throwable t) {
-                Log.i("ERROR","Error");
+                Log.i("No","Error");
             }
         });
-        return list;
+    }
+
+    private void showData(List<Employee> employee) {
+
+        setOnClickListner();
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(new RecyclerAdapter(employee, listener));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
     }
 
 }
