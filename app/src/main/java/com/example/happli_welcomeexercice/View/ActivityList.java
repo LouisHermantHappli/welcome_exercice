@@ -51,6 +51,7 @@ public class ActivityList extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.putExtra(BUNDLE_EMPLOYEE_NAME, employeesList.get(position).getName());
                 setResult(RESULT_OK, intent);
+                finish();
             }
         };
     }

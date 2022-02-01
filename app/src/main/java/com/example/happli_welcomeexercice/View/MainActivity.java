@@ -1,5 +1,7 @@
 package com.example.happli_welcomeexercice.View;
 
+import static com.example.happli_welcomeexercice.View.ActivityList.BUNDLE_EMPLOYEE_NAME;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,14 +19,16 @@ public class MainActivity extends AppCompatActivity {
     private Button btnCheckOut;
     private String employeeName;
     private TextView tvCheck;
-    private static final int LIST_ACTIVITY_REQUEST_CODE = 42;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        if(LIST_ACTIVITY_REQUEST_CODE == requestCode && RESULT_OK == resultCode){
-
-            String name = intent.getExtras().getString(ActivityList.BUNDLE_EMPLOYEE_NAME, "/");
+        if(RESULT_OK == resultCode){
+            String name = intent.getStringExtra(BUNDLE_EMPLOYEE_NAME);
+            if(requestCode == 0)
+                tvCheck.setText(name+" Check-in");
+            if(requestCode == 1)
+                tvCheck.setText(name+" Check-out");
         }
     }
 
@@ -41,9 +45,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent ListIntent = new Intent(MainActivity.this, ActivityList.class);
-                startActivityForResult(ListIntent, LIST_ACTIVITY_REQUEST_CODE);
-                employeeName = getIntent().getExtras().getString("employee");
-                tvCheck.setText(employeeName+" Check-in");
+                startActivityForResult(ListIntent, 0);
+
             }
         });
 
@@ -51,9 +54,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent ListIntent = new Intent(MainActivity.this, ActivityList.class);
-                startActivityForResult(ListIntent, LIST_ACTIVITY_REQUEST_CODE);
-                employeeName = getIntent().getExtras().getString("employee");
-                tvCheck.setText(employeeName+" Check-out");
+                startActivityForResult(ListIntent, 1);
             }
         });
 
