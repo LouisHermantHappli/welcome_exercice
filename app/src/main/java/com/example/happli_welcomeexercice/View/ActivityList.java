@@ -57,12 +57,12 @@ public class ActivityList extends AppCompatActivity {
 //        recyclerView.setAdapter(adapter);
 //    }
 
-    private void setOnClickListner() {
+    private void setOnClickListner(List<Employee> employee) {
         listener = new RecyclerAdapter.RecyclerViewClickListener() {
             @Override
             public void onClick(View v, int position) {
                 Intent intent = new Intent();
-                intent.putExtra(BUNDLE_EMPLOYEE_NAME, employeesList.get(position).getName());
+                intent.putExtra(BUNDLE_EMPLOYEE_NAME, employee.get(position).getName());
                 setResult(RESULT_OK, intent);
                 finish();
             }
@@ -78,6 +78,7 @@ public class ActivityList extends AppCompatActivity {
             public void onResponse(Call<List<Employee>> call, Response<List<Employee>> response) {
 
                 showData(response.body());
+
 //                for(int i = 0; i < response.body().size(); i++){
 //                    Log.d("ADD", response.body().get(i).getName());
 //                    employeesList.add(new Employee(response.body().get(i).getName()));
@@ -94,7 +95,7 @@ public class ActivityList extends AppCompatActivity {
 
     private void showData(List<Employee> employee) {
 
-        setOnClickListner();
+        setOnClickListner(employee);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
