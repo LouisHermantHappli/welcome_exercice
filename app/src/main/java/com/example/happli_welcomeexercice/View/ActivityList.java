@@ -17,6 +17,7 @@ import com.example.happli_welcomeexercice.Repository.EmployeeAccess;
 import com.example.happli_welcomeexercice.Repository.EmployeeInterface;
 import com.example.happli_welcomeexercice.ViewModel.RecyclerAdapter;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,11 +36,17 @@ public class ActivityList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        employeesList = new ArrayList<>();
         recyclerView = (RecyclerView)findViewById(R.id.rvEmployee);
+        employeesList = new ArrayList<Employee>();
 
         Log.d("Tab", "Garni tableau");
-        setEmployeeName();
+        employeesList = setEmployeeName();
+        if(employeesList.size() == 9)
+            Log.i("Employe", "List created");
+
+        for(int i =0; i<employeesList.size();i++)
+            Log.d("TAB OUT", employeesList.get(i).getName());
+
         Log.d("Adapter", "dans l'adapter");
         setAdapter();
 
@@ -68,7 +75,9 @@ public class ActivityList extends AppCompatActivity {
         };
     }
 
-    private void setEmployeeName() {
+    private ArrayList<Employee> setEmployeeName() {
+
+        ArrayList<Employee> list = new ArrayList<Employee>();
 
         EmployeeInterface api = EmployeeAccess.employeeAccess();
         Log.d("test", "ok");
@@ -77,25 +86,18 @@ public class ActivityList extends AppCompatActivity {
             public void onResponse(Call<List<Employee>> call, Response<List<Employee>> response) {
 
                 for(int i = 0; i < response.body().size(); i++){
-                    employeesList.add(new Employee(response.body().get(i).getName()));
                     Log.d("ADD", response.body().get(i).getName());
+                    list.add(new Employee(response.body().get(i).getName()));
+                    Log.d("TAB", list.get(i).getName());
                 }
-                Log.i("Employe", "List created");
-                for(int i =0; i<employeesList.size();i++)
-                    Log.d("TAB", employeesList.get(i).getName());
             }
 
             @Override
             public void onFailure(Call<List<Employee>> call, Throwable t) {
-                Log.i("No","Error");
+                Log.i("ERROR","Error");
             }
         });
-
-//        employeesList.add(new Employee("John"));
-//        employeesList.add(new Employee("Lucas"));
-//        employeesList.add(new Employee("Joe"));
-//        employeesList.add(new Employee("Bob"));
-
+        return list;
     }
 
 }
