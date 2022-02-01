@@ -17,7 +17,6 @@ public class MainActivity extends AppCompatActivity {
 
     private Button btnCheckIn;
     private Button btnCheckOut;
-    private String employeeName;
     private TextView tvCheck;
 
     @Override
