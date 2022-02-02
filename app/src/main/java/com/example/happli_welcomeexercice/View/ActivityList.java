@@ -60,7 +60,7 @@ public class ActivityList extends AppCompatActivity {
     private void setEmployeeName() {
 
         EmployeeInterface api = EmployeeAccess.employeeAccess();
-        Log.d("test", "ok");
+        Log.d("EMPL", "création des employés");
         api.getAllUsers().enqueue(new Callback<List<Employee>>() {
             @Override
             public void onResponse(Call<List<Employee>> call, Response<List<Employee>> response) {
